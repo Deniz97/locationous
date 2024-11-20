@@ -1,0 +1,29 @@
+## Stack:
+
+Django 5
+Celery
+Postgres
+Redis
+
+Refer to Makefile for common commands.
+
+
+## Architecture:
+
+We got 3 endpoints in location/views.py.
+For consuming the device data, we pass the data to celery task which resides on location/tasks.py
+We use serializers for input validation, and also input and output data parsing.
+
+## Tests:
+
+We got 2 integration test suite, one for creating device data and one for getting device data.
+We also got a unit test suite for device data service. The service itself is pretty redundant, but I added it anyway to showcase a unit testing example.
+
+## TCP
+
+For TCP, we should run the django app with ASGI instead of WSGI. Daphne is used in the Makefile to start the asgi server. The wsgi server is ran with django's own runserver command instead of gunicorn.
+In asgi.py, we got a TCP server with asyncio which consumes the input, validates it, and again passes it to the celery task.
+
+## Issues
+
+For some reason, I could not make the asgi.py server also run the django itself. Righ now I run the django and TCP server seperately, former on wsgi and latter on asgi. According to internet it should be possible to run both in the asgi.py, but my django-targeted http requests fails. I would assume that the django is working fine, but i just can't bind the server correctly on the port. I stopped at this point.
