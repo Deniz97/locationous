@@ -27,3 +27,5 @@ In asgi.py, we got a TCP server with asyncio which consumes the input, validates
 ## Issues
 
 For some reason, I could not make the asgi.py server also run the django itself. Righ now I run the django and TCP server seperately, former on wsgi and latter on asgi. According to internet it should be possible to run both in the asgi.py, but my django-targeted http requests fails. I would assume that the django is working fine, but i just can't bind the server correctly on the port. I stopped at this point.
+
+I also did a git mismatch so had to push in a single commit, sorry for that.
